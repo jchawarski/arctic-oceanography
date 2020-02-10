@@ -9,7 +9,7 @@ library("data.table")
 {
 files <- list.files(path="D:/NEG 2017/Leg 1/CTD/Dat", full.names = TRUE, pattern= "*.cnv")  # load files from CTD folder
     CTD.cnv <- lapply(files, function(i){ctdTrim(read.ctd.sbe(i))})                          # concatenates and trims upcast from all CTD files into large list
-        meta.tbl <- setNames(data.frame(matrix(ncol = 3, nrow = 118)), c("Site", "Date", "ID")) # create empty df for summary data
+        meta.tbl <- setNames(data.frame(matrix(ncol = 3, nrow = length(files)), c("Site", "Date", "ID")) # create empty df for summary data
                     # in this example nrow is the number of cast files contained in the folder - change it as needed
           meta.tbl[,1] <-  paste(substr(sapply(CTD.cnv, '[[', "filename"), 26, 50))             # selects and trims file name, put in in blank matrix
           meta.tbl[,2] <- sapply(CTD.cnv, function(i){paste(unique(i[["date"]]))})                # pulls date from each @data in data.in
